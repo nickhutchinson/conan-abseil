@@ -21,8 +21,6 @@ class AbseilConan(ConanFile):
     exports_sources = ["*.patch"]
     generators = "cmake"
     settings = "os", "arch", "compiler", "build_type"
-    options = {"fPIC": [True, False]}
-    default_options = ("fPIC=True",)
 
     _sha256 = "e2b53bfb685f5d4130b84c4f3050c81bf48c497614dc85d91dbd3ed9129bce6d"
     _source_dir = "abseil-cpp-{0}".format(version)
@@ -60,6 +58,7 @@ class AbseilConan(ConanFile):
     def _configure_cmake(self):
         cmake = CMake(self, generator="Ninja")
         cmake.verbose = True
+        cmake.definitions["CMAKE_POSITION_INDEPENDENT_CODE"] = True
         cmake.definitions["BUILD_TESTING"] = False
         cmake.configure(source_folder=self._source_dir)
         return cmake
