@@ -39,6 +39,10 @@ class AbseilConan(ConanFile):
             textwrap.dedent(
                 """\
                 project(absl)
+                if (POLICY CMP0063)
+                  # Honour CMake visibility props
+                  cmake_policy(SET CMP0063 NEW)
+                endif ()
                 include("${CMAKE_BINARY_DIR}/conanbuildinfo.cmake")
                 conan_basic_setup()
                 """
@@ -61,6 +65,9 @@ class AbseilConan(ConanFile):
         cmake = CMake(self, generator="Ninja")
         cmake.verbose = True
         cmake.definitions["CMAKE_POSITION_INDEPENDENT_CODE"] = True
+        cmake.definitions["CMAKE_C_VISIBILITY_PRESET"] = "hidden"
+        cmake.definitions["CMAKE_CXX_VISIBILITY_PRESET"] = "hidden"
+        cmake.definitions["CMAKE_VISIBILITY_INLINES_HIDDEN"] = True
         if self.options.cxx_std:
             cmake.definitions["CMAKE_CXX_STANDARD"] = self.options.cxx_std
 
