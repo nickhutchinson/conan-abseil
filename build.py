@@ -18,17 +18,19 @@ def main():
 
     configs = []
     for config in builder.items:
-        cxx_stds = [
+        cppstds = [
             arg.strip()
-            for arg in os.environ.get("ABSEIL_CXX_STD", "default").split(",")
+            for arg in os.environ.get("_XCONAN_CPPSTD", "default").split(",")
         ]
 
-        for cxx_std in cxx_stds:
-            if cxx_std == "default":
+        for cppstd in cppstds:
+            if cppstd == "default":
                 configs.append(config)
             else:
                 configs.append(
-                    config._replace(options={**config.options, "cxx_std": cxx_std})
+                    config._replace(
+                        settings={**config.settings, "compiler.cppstd": cppstd}
+                    )
                 )
 
     builder.items = configs

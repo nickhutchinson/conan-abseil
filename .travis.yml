@@ -25,41 +25,41 @@ matrix:
       env: CONAN_GCC_VERSIONS=5 CONAN_DOCKER_IMAGE=conanio/gcc5
 
     - <<: *linux
-      env: CONAN_GCC_VERSIONS=6 CONAN_DOCKER_IMAGE=conanio/gcc6 ABSEIL_CXX_STD=default,17
+      env: CONAN_GCC_VERSIONS=6 CONAN_DOCKER_IMAGE=conanio/gcc6 _XCONAN_CPPSTD=default,17
 
     - <<: *linux
-      env: CONAN_GCC_VERSIONS=7 CONAN_DOCKER_IMAGE=conanio/gcc7 ABSEIL_CXX_STD=default,17
+      env: CONAN_GCC_VERSIONS=7 CONAN_DOCKER_IMAGE=conanio/gcc7 _XCONAN_CPPSTD=default,17
 
     - <<: *linux
-      env: CONAN_GCC_VERSIONS=8 CONAN_DOCKER_IMAGE=conanio/gcc8 ABSEIL_CXX_STD=default,17
+      env: CONAN_GCC_VERSIONS=8 CONAN_DOCKER_IMAGE=conanio/gcc8 _XCONAN_CPPSTD=default,17
 
     - <<: *linux
-      env: CONAN_CLANG_VERSIONS=5.0 CONAN_DOCKER_IMAGE=conanio/clang50 ABSEIL_CXX_STD=default,17
+      env: CONAN_CLANG_VERSIONS=5.0 CONAN_DOCKER_IMAGE=conanio/clang50 _XCONAN_CPPSTD=default,17
 
     - <<: *linux
-      env: CONAN_CLANG_VERSIONS=6.0 CONAN_DOCKER_IMAGE=conanio/clang60 ABSEIL_CXX_STD=default,17
+      env: CONAN_CLANG_VERSIONS=6.0 CONAN_DOCKER_IMAGE=conanio/clang60 _XCONAN_CPPSTD=default,17
 
     - <<: *linux
-      env: CONAN_CLANG_VERSIONS=7.0 CONAN_DOCKER_IMAGE=conanio/clang7 ABSEIL_CXX_STD=default,17
+      env: CONAN_CLANG_VERSIONS=7.0 CONAN_DOCKER_IMAGE=conanio/clang7 _XCONAN_CPPSTD=default,17
 
     - <<: *linux
-      env: CONAN_CLANG_VERSIONS=8 CONAN_DOCKER_IMAGE=conanio/clang8 ABSEIL_CXX_STD=default,17
+      env: CONAN_CLANG_VERSIONS=8 CONAN_DOCKER_IMAGE=conanio/clang8 _XCONAN_CPPSTD=default,17
 
     - <<: *osx
       osx_image: xcode8.3
-      env: CONAN_APPLE_CLANG_VERSIONS=8.1 ABSEIL_CXX_STD=default,17
+      env: CONAN_APPLE_CLANG_VERSIONS=8.1 _XCONAN_CPPSTD=default,17
 
     - <<: *osx
       osx_image: xcode9.2
-      env: CONAN_APPLE_CLANG_VERSIONS=9.0 ABSEIL_CXX_STD=default,17
+      env: CONAN_APPLE_CLANG_VERSIONS=9.0 _XCONAN_CPPSTD=default,17
 
     - <<: *osx
       osx_image: xcode9.3
-      env: CONAN_APPLE_CLANG_VERSIONS=9.1 ABSEIL_CXX_STD=default,17
+      env: CONAN_APPLE_CLANG_VERSIONS=9.1 _XCONAN_CPPSTD=default,17
 
     - <<: *osx
       osx_image: xcode10
-      env: CONAN_APPLE_CLANG_VERSIONS=10.0 ABSEIL_CXX_STD=default,17
+      env: CONAN_APPLE_CLANG_VERSIONS=10.0 _XCONAN_CPPSTD=default,17
 
 install:
   - chmod +x .travis/install.sh
