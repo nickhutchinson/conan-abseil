@@ -5,6 +5,7 @@ env:
     - CONAN_CHANNEL: 'testing'
     - CONAN_UPLOAD: 'https://api.bintray.com/conan/nshutchinson/conan'
     - CONAN_ARCHS: 'x86_64'
+    - CONAN_REVISIONS_ENABLED: '1'
 
 linux: &linux
   os: linux
