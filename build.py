@@ -9,7 +9,7 @@ HERE = os.path.abspath(os.path.dirname(__file__))
 
 def main():
     with open(os.path.join(HERE, "requirements.txt")) as f:
-        requirement_str = f.read().replace("\\\n", " ").replace("\\\r\n", "")
+        requirement_str = f.read().replace("\\\n", " ").replace("\\\r\n", " ")
 
     reqs = [str(req) for req in pkg_resources.parse_requirements(requirement_str)]
 
