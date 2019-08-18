@@ -1,0 +1,34 @@
+From 08103fea0c469a4affa77ac4a49352ef6d1e831d Mon Sep 17 00:00:00 2001
+From: Nicholas Hutchinson <nshutchinson@gmail.com>
+Date: Sun, 18 Aug 2019 11:32:25 +0100
+Subject: [PATCH] Add work-around to fix MSVC debug build errors
+
+---
+ absl/random/CMakeLists.txt | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/absl/random/CMakeLists.txt b/absl/random/CMakeLists.txt
+index 2d5c065..b14d8f6 100644
+--- a/absl/random/CMakeLists.txt
++++ b/absl/random/CMakeLists.txt
+@@ -14,6 +14,17 @@
+ # limitations under the License.
+ #
+ 
++if (MSVC)
++  # Work-around https://github.com/abseil/abseil-cpp/issues/364 where /RTC1
++  # flag in debug mode clashes with ABSL_RANDOM_RANDEN_COPTS.
++  string(REGEX REPLACE
++    "[-/]RTC[1su]+"
++    ""
++    CMAKE_CXX_FLAGS_DEBUG
++    "${CMAKE_CXX_FLAGS_DEBUG}"
++  )
++endif ()
++
+ absl_cc_library(
+   NAME
+     random_random
+-- 
+2.22.1
+

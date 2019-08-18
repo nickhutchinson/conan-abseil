@@ -10,7 +10,7 @@ from conans.model.version import Version
 
 class AbseilConan(ConanFile):
     name = "abseil"
-    version = "20181200"
+    version = "20190808"
     url = "https://github.com/abseil/abseil-cpp"
     homepage = url
     author = "Abseil <abseil-io@googlegroups.com>"
@@ -22,7 +22,7 @@ class AbseilConan(ConanFile):
     generators = "cmake"
     settings = "os", "arch", "compiler", "build_type"
 
-    _sha256 = "e2b53bfb685f5d4130b84c4f3050c81bf48c497614dc85d91dbd3ed9129bce6d"
+    _sha256 = "8100085dada279bf3ee00cd064d43b5f55e5d913be0dfe2906f06f8f28d5b37e"
     _source_dir = "abseil-cpp-{0}".format(version)
 
     def source(self):
@@ -33,10 +33,10 @@ class AbseilConan(ConanFile):
         )
         tools.replace_in_file(
             os.path.join(self._source_dir, "CMakeLists.txt"),
-            "project(absl)",
+            "project(absl CXX)",
             textwrap.dedent(
                 """\
-                project(absl)
+                project(absl CXX)
                 if (POLICY CMP0063)
                   # Honour CMake visibility props
                   cmake_policy(SET CMP0063 NEW)
@@ -47,7 +47,7 @@ class AbseilConan(ConanFile):
             ).rstrip(),
         )
         tools.patch(
-            patch_file="0001-Fix-build-of-leak_check-target-on-MSVC.patch",
+            patch_file="0001-Add-work-around-to-fix-MSVC-debug-build-errors.patch",
             base_path=self._source_dir,
         )
 
@@ -95,3 +95,8 @@ class AbseilConan(ConanFile):
         self.cpp_info.libs.extend(tools.collect_libs(self))
         if self.settings.os == "Linux":
             self.cpp_info.libs.extend(["-Wl,--end-group", "pthread"])
+
+        if tools.is_apple_os(self.settings.os):
+            self.cpp_info.sharedlinkflags = self.cpp_info.exelinkflags = [
+                "-framework CoreFoundation"
+            ]

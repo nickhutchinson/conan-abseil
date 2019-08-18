@@ -1,10 +1,53 @@
 #!/usr/bin/env python3
 import os
 import pkg_resources
+import sys
 
 from cpt.packager import ConanMultiPackager
 
 HERE = os.path.abspath(os.path.dirname(__file__))
+
+
+def _add_cpp_stds(configs):
+    ret = []
+    for config in configs:
+        cppstds = [
+            arg.strip()
+            for arg in os.environ.get("_XCONAN_CPPSTD", "default").split(",")
+        ]
+
+        for cppstd in cppstds:
+            if cppstd == "default":
+                ret.append(config)
+            else:
+                ret.append(
+                    config._replace(
+                        settings={**config.settings, "compiler.cppstd": cppstd}
+                    )
+                )
+
+    return ret
+
+
+def _add_macos_versions(configs):
+    ret = []
+    for config in configs:
+        versions = [
+            arg.strip()
+            for arg in os.environ.get("_XCONAN_MACOS_VERSIONS", "default").split(",")
+        ]
+
+        for os_version in versions:
+            if os_version == "default":
+                ret.append(config)
+            else:
+                ret.append(
+                    config._replace(
+                        settings={**config.settings, "os.version": os_version}
+                    )
+                )
+
+    return ret
 
 
 def main():
@@ -16,22 +59,11 @@ def main():
     builder = ConanMultiPackager(pip_install=reqs)
     builder.add_common_builds(pure_c=False)
 
-    configs = []
-    for config in builder.items:
-        cppstds = [
-            arg.strip()
-            for arg in os.environ.get("_XCONAN_CPPSTD", "default").split(",")
-        ]
+    configs = list(builder.items)
+    configs = _add_cpp_stds(configs)
 
-        for cppstd in cppstds:
-            if cppstd == "default":
-                configs.append(config)
-            else:
-                configs.append(
-                    config._replace(
-                        settings={**config.settings, "compiler.cppstd": cppstd}
-                    )
-                )
+    if sys.platform == "darwin":
+        configs = _add_macos_versions(configs)
 
     builder.items = configs
     builder.run()

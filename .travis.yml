@@ -47,19 +47,19 @@ matrix:
 
     - <<: *osx
       osx_image: xcode8.3
-      env: CONAN_APPLE_CLANG_VERSIONS=8.1 _XCONAN_CPPSTD=default,17
+      env: CONAN_APPLE_CLANG_VERSIONS=8.1 _XCONAN_CPPSTD=default,17 _XCONAN_MACOS_VERSIONS=default,10.9
 
     - <<: *osx
       osx_image: xcode9.2
-      env: CONAN_APPLE_CLANG_VERSIONS=9.0 _XCONAN_CPPSTD=default,17
+      env: CONAN_APPLE_CLANG_VERSIONS=9.0 _XCONAN_CPPSTD=default,17 _XCONAN_MACOS_VERSIONS=default,10.9
 
     - <<: *osx
       osx_image: xcode9.3
-      env: CONAN_APPLE_CLANG_VERSIONS=9.1 _XCONAN_CPPSTD=default,17
+      env: CONAN_APPLE_CLANG_VERSIONS=9.1 _XCONAN_CPPSTD=default,17 _XCONAN_MACOS_VERSIONS=default,10.9
 
     - <<: *osx
       osx_image: xcode10
-      env: CONAN_APPLE_CLANG_VERSIONS=10.0 _XCONAN_CPPSTD=default,17
+      env: CONAN_APPLE_CLANG_VERSIONS=10.0 _XCONAN_CPPSTD=default,17 _XCONAN_MACOS_VERSIONS=default,10.9
 
 install:
   - chmod +x .travis/install.sh
